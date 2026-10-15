@@ -1,0 +1,42 @@
+# Whitelist: ignore everything at the top level, then re-include what the repo ships.
+# Third-party code (FoundationPose, nvdiffrast), model weights, rosbags and datasets
+# are fetched / built by scripts/install.sh or recorded locally — never stored in git.
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/requirements.txt
+!/foundation_pose.py
+!/fp.py
+!/foundationpose_ros_multi.py
+!/test_foundation_pose.py
+!/cam_2_base_transform.py
+!/record.py
+!/yoloworld_preview.py
+!/yolo_det_preview.py
+!/debug_rgbd_stats.py
+!/scripts/
+!/patches/
+!/docs/
+
+# Object meshes (large / scratch ones stay local)
+!/demo_data/
+/demo_data/old_data/
+/demo_data/chunsic/
+/demo_data/bottle/
+/demo_data/jammanbo/
+/demo_data/orange/*
+!/demo_data/orange/orange.obj
+/demo_data/banana/
+*_origframe.obj
+*_v0.obj
+*_v1.obj
+*_old.obj
+
+__pycache__/
+*.pyc
+*.pt
+*.pth
+*.db3
+*.bag
+*.zip

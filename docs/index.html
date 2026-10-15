@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FoundationPose ROS 2 Tracker</title>
+<meta name="description" content="Zero-shot 6D object tracking in ROS 2 from a 3D mesh and an object name: YOLO-World + SAM 2 + FoundationPose.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbfaf7; --surface:#ffffff; --ink:#1b1d21; --muted:#5d636e; --line:#e6e3dc;
+  --accent:#0f8a5f; --accent-soft:#e3f3ec; --code:#f3f1ec;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#111315; --surface:#181b1e; --ink:#e9eaec; --muted:#9aa1ab; --line:#2a2e33;
+         --accent:#3ccf91; --accent-soft:#16301f; --code:#1f2327; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{padding:64px 0 28px}
+.eyebrow{font:500 13px/1 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.12;margin:14px 0 14px;letter-spacing:-.02em}
+.lede{font-size:19px;color:var(--muted);max-width:760px;margin:0}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-block;padding:10px 16px;border-radius:8px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:500;background:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.hero{margin:12px 0 8px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
+.hero video{display:block;width:100%;height:auto}
+.cap{font-size:14px;color:var(--muted);margin:8px 0 0}
+h2{font-size:24px;margin:56px 0 12px;letter-spacing:-.01em}
+p{max-width:780px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.step b{display:block;font-size:15px;margin-bottom:4px}
+.step span{color:var(--muted);font-size:14.5px}
+.step .n{font:500 12px "JetBrains Mono",monospace;color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin-top:16px}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+figure img,figure video{display:block;width:100%;height:auto;background:#000}
+figcaption{padding:10px 12px;font-size:14px;color:var(--muted)}
+.vids{display:grid;grid-template-columns:repeat(auto-fit,minmax(440px,1fr));gap:14px;margin-top:16px}
+@media (max-width:520px){.vids{grid-template-columns:1fr}}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font:13.5px/1.55 "JetBrains Mono",monospace}
+code{font-family:"JetBrains Mono",monospace;font-size:.92em}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:16px}
+.stat{background:var(--accent-soft);border-radius:10px;padding:14px 16px}
+.stat b{display:block;font-size:22px}
+.stat span{font-size:14px;color:var(--muted)}
+.plot{margin-top:16px;border-radius:10px;border:1px solid var(--line);background:#fff;padding:8px}
+.plot img{width:100%;display:block}
+footer{margin:64px 0 40px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">ROS 2 · 6D pose · zero-shot</div>
+  <h1>FoundationPose ROS 2 Tracker</h1>
+  <p class="lede">Track any object in 6D from just its 3D mesh and its name. YOLO-World finds it from a
+  text prompt, SAM 2 segments it, and FoundationPose registers and tracks its pose. The node publishes a
+  gravity-aligned <code>PoseStamped</code> that a robot can grasp from, with no per-object training.</p>
+  <div class="btns">
+    <a class="btn primary" href="https://github.com/ismael-esp/foundationpose-ros2-tracker">Code &amp; setup guide</a>
+    <a class="btn" href="https://github.com/ismael-esp/foundationpose-ros2-tracker/releases/tag/v1.0">Demo bag (v1.0)</a>
+    <a class="btn" href="https://github.com/ismael-esp/foundationpose-ros2-tracker/tree/main/docs/sample_run">Sample run data</a>
+  </div>
+</header>
+
+<div class="hero">
+  <video src="media/replay_green_cube.mp4" autoplay muted loop playsinline controls></video>
+</div>
+<p class="cap">Recorded RealSense RGB-D bag, tracked with the prompt <code>"green cube"</code> and <code>green_cube.obj</code>.
+The cube is lifted by hand and put back while three distractor objects stay on the table. Thick axes show the published Z-up pose.</p>
+
+<h2>How it works</h2>
+<div class="steps">
+  <div class="step"><span class="n">01 · detect</span><b>YOLO-World + SAM 2</b><span>The object name is the detection prompt, and SAM 2 turns the box into a mask. You can confirm the proposal or click the object.</span></div>
+  <div class="step"><span class="n">02 · register</span><b>FoundationPose</b><span>Full 6D pose from the masked RGB-D frame and the CAD or scanned mesh.</span></div>
+  <div class="step"><span class="n">03 · track</span><b>Hybrid loop</b><span><code>track_one()</code> every frame on hole-filled depth, plus periodic re-anchoring and automatic re-acquisition.</span></div>
+  <div class="step"><span class="n">04 · publish</span><b>Robot-ready pose</b><span>Pose in the world frame with Z up and yaw locked. It stays attached to the hand TF while a grasp hides the object.</span></div>
+</div>
+
+<h2>On the robot cell</h2>
+<p>Live tracking with the top-down RealSense of a dual UR3 + Allegro Hand cell. The tracked pose drives a dexterous grasp planner.</p>
+<div class="vids">
+  <figure><video src="media/pick_place_red_cube_system.mp4" muted loop playsinline controls preload="metadata"></video>
+    <figcaption>Red cube pick-and-place: RViz, tracker window and lab camera</figcaption></figure>
+  <figure><video src="media/pick_place_tiger_system.mp4" muted loop playsinline controls preload="metadata"></video>
+    <figcaption>Plush tiger: a non-convex, deformable-looking object</figcaption></figure>
+  <figure><video src="media/pick_place_red_cube_cameras.mp4" muted loop playsinline controls preload="metadata"></video>
+    <figcaption>Top-down overlay during approach, grasp and lift</figcaption></figure>
+</div>
+
+<div class="grid">
+  <figure><img src="media/track_mustard.gif" alt="mustard bottle tracked" loading="lazy"><figcaption>Mustard bottle moved by hand</figcaption></figure>
+  <figure><img src="media/track_tiger.gif" alt="plush tiger tracked" loading="lazy"><figcaption>Plush tiger</figcaption></figure>
+  <figure><img src="media/track_pikachu.gif" alt="plush toy grasped" loading="lazy"><figcaption>Plush toy in an Allegro grasp</figcaption></figure>
+  <figure><img src="media/track_red_cube.gif" alt="red cube tracked" loading="lazy"><figcaption>Red cube</figcaption></figure>
+  <figure><img src="media/track_jammanbo.gif" alt="plush toy tracked" loading="lazy"><figcaption>Plush toy</figcaption></figure>
+  <figure><img src="media/track_green_cube.gif" alt="green cube tracked" loading="lazy"><figcaption>Green cube</figcaption></figure>
+</div>
+
+<h2>Sample run</h2>
+<div class="stats">
+  <div class="stat"><b>0.70</b><span>YOLO-World confidence for "green cube" on first sight</span></div>
+  <div class="stat"><b>345</b><span>poses published over 26 s of recording</span></div>
+  <div class="stat"><b>~9 cm</b><span>hand-held motion (lift and put back) tracked without losing the lock</span></div>
+  <div class="stat"><b>1.000</b><span>Z-up dot product on every published pose</span></div>
+</div>
+<div class="plot"><img src="sample_run/green_cube_trajectory.png" alt="Published trajectory and orientation of the green cube"></div>
+
+<h2>Try it</h2>
+<pre><code>git clone https://github.com/ismael-esp/foundationpose-ros2-tracker.git
+cd foundationpose-ros2-tracker
+bash scripts/install.sh                     # conda env + FoundationPose + CUDA extensions + weights
+bash scripts/replay_demo.sh "green cube"    # offline demo on the recorded bag, no camera needed</code></pre>
+<p>Tested on Ubuntu 22.04, ROS 2 Humble, an RTX 5070 Ti (Blackwell) with PyTorch 2.11 + CUDA 12.8, and RealSense D4xx.
+The README covers installation, configuration, adding your own objects, and troubleshooting.</p>
+
+<footer>
+  Ismael Espinoza · built on <a href="https://github.com/NVlabs/FoundationPose">FoundationPose</a> (NVIDIA),
+  <a href="https://github.com/ammar-n-abbas/FoundationPoseROS2">FoundationPoseROS2</a>,
+  YOLO-World and SAM 2 via Ultralytics.
+</footer>
+</div>
+</body>
+</html>

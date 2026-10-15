@@ -1,0 +1,52 @@
+[INFO] Using mesh: demo_data/green_cube/green_cube.obj
+[INFO] [1792037722.134986049] [foundation_pose_node]: Loaded mesh 'green cube' -> topic /green_cube_pose (verts=5701, extents=[      0.065      0.0749       0.075])
+[INFO] [1792037722.476847165] [foundation_pose_node]: [Detection] device=cuda:0
+[INFO] [1792037723.621671470] [foundation_pose_node]: [Detectors] mode=auto auto=yoloworld (YOLO-World size='l' prompts=['green cube'] -> SAM2; click=SAM2 point) obj_diameter=0.124m mask_depth_band=0.0 (OFF — raw SAM2 mask)
+[INFO] [1792037723.623188113] [foundation_pose_node]: [Precision] requested=auto resolved=tf32 sm=120 (bf16 auto-reverts on linalg.inv bf16 error)
+[INFO] [1792037723.623423356] [foundation_pose_node]: [Orientation] mode=locked  (gravity_align=True, yaw_mode=lock) — published Z forced up, yaw frozen at first register
+[INFO] [1792037727.126036975] [foundation_pose_node]: Worker thread started.
+[INFO] [1792037727.126339960] [foundation_pose_node]: Waiting for color+depth+camera_info ...
+[INFO] [1792037727.126428699] [foundation_pose_node]: [Camera] preset=head color=/camera/camera/color/image_raw cam_frame=camera_color_optical_frame hand_frame=ra_palm_link cam_world_source=calib
+[INFO] [1792037727.127052408] [foundation_pose_node]: [Calib] T_world_cam (CALIB_T) t=[     0.0078      0.4391      1.9625]
+[INFO] [1792037735.761702706] [foundation_pose_node]: Camera K initialized:
+[INFO] [1792037735.815650752] [foundation_pose_node]: Inputs ready (cam->world via calib) -> SEARCHING
+[INFO] [1792037737.850588401] [foundation_pose_node]: [YOLO-World] model=yolov8l-worldv2.pt prompts=['green cube']
+[WARN] [1792037738.112376271] [foundation_pose_node]: [YOLO-World] 1 det -> top by score (conf-only): green cube:c=0.70
+[INFO] [1792037738.320999347] [foundation_pose_node]: [detect] YoloWorldDetector candidate: 9793px bbox=(224,161,329,268) centroid=(278,215)
+[WARN] [1792037738.321207795] [foundation_pose_node]: [detect] auto-accept via YoloWorldDetector (--detect_mode auto, no confirm)
+[WARN] [1792037739.159995219] [foundation_pose_node]: [register OK] mask=9620px mask_med_depth=0.689m -> obj cam_xyz=(-0.235,-0.047,0.710) |t|=0.749m  (obj diam 0.124m). If cam_z >> mask_med_depth the mask still leaks background.
+[INFO] [1792037739.307078267] [foundation_pose_node]: [telemetry] TRACKING ~1 Hz, latency 96 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037739.307248534] [foundation_pose_node]: [perf] det=2505.4(1) refine=432.4(2) pub=0.3(1) total~2938.1ms
+[WARN] [1792037739.307413109] [foundation_pose_node]: [track] TRACKING [hybrid] dT=0mm/f camZ=0.710m  src=track_one objpx=11124 med=0.688m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037740.481950515] [foundation_pose_node]: [telemetry] TRACKING ~3 Hz, latency 72 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037740.483188049] [foundation_pose_node]: [perf] render=313.2(3) refine=13.6(3) pub=0.3(3) total~327.1ms
+[WARN] [1792037740.483373146] [foundation_pose_node]: [track] TRACKING [hybrid] dT=7mm/f camZ=0.706m  src=track_one objpx=10296 med=0.686m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037741.587750000] [foundation_pose_node]: [telemetry] TRACKING ~3 Hz, latency 102 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037741.587918229] [foundation_pose_node]: [perf] render=316.9(3) refine=12.2(3) pub=0.2(3) total~329.3ms
+[WARN] [1792037741.588088495] [foundation_pose_node]: [track] TRACKING [hybrid] dT=5mm/f camZ=0.708m  src=track_one objpx=10815 med=0.686m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037742.716171921] [foundation_pose_node]: [telemetry] TRACKING ~5 Hz, latency 159 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037742.716348794] [foundation_pose_node]: [perf] render=178.5(5) refine=11.5(5) pub=0.2(5) total~190.3ms
+[WARN] [1792037742.716514820] [foundation_pose_node]: [track] TRACKING [hybrid] dT=5mm/f camZ=0.711m  src=track_one objpx=11227 med=0.689m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037743.893748492] [foundation_pose_node]: [telemetry] TRACKING ~4 Hz, latency 128 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037743.893910017] [foundation_pose_node]: [perf] render=238.4(4) refine=12.5(4) pub=0.3(4) total~251.2ms
+[WARN] [1792037743.894068841] [foundation_pose_node]: [track] TRACKING [hybrid] dT=3mm/f camZ=0.710m  src=track_one objpx=10812 med=0.688m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037744.954787652] [foundation_pose_node]: [telemetry] TRACKING ~3 Hz, latency 100 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037744.954967677] [foundation_pose_node]: [perf] render=292.8(3) refine=13.6(3) pub=0.2(3) total~306.6ms
+[WARN] [1792037744.955136169] [foundation_pose_node]: [track] TRACKING [hybrid] dT=6mm/f camZ=0.715m  src=track_one objpx=10914 med=0.687m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037746.058983094] [foundation_pose_node]: [telemetry] TRACKING ~3 Hz, latency 127 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037746.059168362] [foundation_pose_node]: [perf] render=294.8(3) refine=13.8(3) pub=0.3(3) total~308.8ms
+[WARN] [1792037746.059333175] [foundation_pose_node]: [track] TRACKING [hybrid] dT=6mm/f camZ=0.709m  src=track_one objpx=10302 med=0.687m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037747.116311069] [foundation_pose_node]: [telemetry] TRACKING ~3 Hz, latency 110 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037747.116482219] [foundation_pose_node]: [perf] render=297.9(3) refine=12.4(3) pub=0.2(3) total~310.5ms
+[WARN] [1792037747.116645248] [foundation_pose_node]: [track] TRACKING [hybrid] dT=4mm/f camZ=0.710m  src=track_one objpx=10815 med=0.687m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037748.410977212] [foundation_pose_node]: [telemetry] TRACKING ~4 Hz, latency 196 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037748.411172909] [foundation_pose_node]: [perf] render=267.3(4) refine=13.3(4) pub=0.2(4) total~280.9ms
+[WARN] [1792037748.411354812] [foundation_pose_node]: [track] TRACKING [hybrid] dT=2mm/f camZ=0.710m  src=track_one objpx=10712 med=0.687m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[WARN] [1792037748.917141939] [foundation_pose_node]: [YOLO-World] 1 det -> top by score (iou-reranked): green cube:c=0.69,iou=0.59
+...
+[INFO] [1792037841.935826201] [foundation_pose_node]: [perf] render=216.6(4) refine=11.4(4) pub=0.2(4) total~228.2ms
+[WARN] [1792037841.936030722] [foundation_pose_node]: [track] TRACKING [hybrid] dT=4mm/f camZ=0.711m  src=track_one objpx=10812 med=0.692m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[INFO] [1792037842.940745575] [foundation_pose_node]: [telemetry] TRACKING ~4 Hz, latency 12615 ms, hand_offset=no prec=tf32  iou30=0.00(N=0)  iter=1 max=4
+[INFO] [1792037842.940914848] [foundation_pose_node]: [perf] render=204.5(4) refine=11.4(4) pub=0.2(4) total~216.1ms
+[WARN] [1792037842.941078350] [foundation_pose_node]: [track] TRACKING [hybrid] dT=3mm/f camZ=0.714m  src=track_one objpx=11024 med=0.692m yaw=LOCK  pubZ=(0.00,-0.00,1.00) OK-up
+[ERROR] [1792037843.164865571] [foundation_pose_node]: [process] exception: Failed to publish: publisher's context is invalid, at ./src/rcl/publisher.c:389
