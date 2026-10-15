@@ -91,6 +91,12 @@ flowchart LR
 
 ## Results
 
+### Same recording, different name: `--object "red cube"`
+
+<p align="center"><img src="docs/media/replay_red_cube.gif" width="480" alt="Same bag, prompt red cube: the red cube is tracked instead"/></p>
+
+Changing only the prompt and mesh switches the target. The green cube is now the distractor.
+
 ### Live tracking on the robot cell (real RealSense, top-down head camera)
 
 | | | |
