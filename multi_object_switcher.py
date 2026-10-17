@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# test_foundation_pose.py
+# multi_object_switcher.py
 # In-process MULTI-OBJECT switcher on top of foundation_pose.py (single-object).
 #
 # Why this exists:
@@ -27,10 +27,10 @@
 # the OBJECT_CATALOG below, not the command line):
 #
 #   # all 10 (DEFAULT_OBJECTS order) — --objects may be omitted entirely:
-#   CUDA_VISIBLE_DEVICES=1 python3 test_foundation_pose.py \
+#   CUDA_VISIBLE_DEVICES=1 python3 multi_object_switcher.py \
 #       --hand_frame ra_palm_link --viz_local --camera extra --cam_world_source tf
 #   # ...or pass an explicit subset/order:
-#   CUDA_VISIBLE_DEVICES=1 python3 test_foundation_pose.py \
+#   CUDA_VISIBLE_DEVICES=1 python3 multi_object_switcher.py \
 #       --objects "tiger,red_cube,green_cube,pikachu,whale,milk,snorlax,mustard,green_can,tea_peach" \
 #       --hand_frame ra_palm_link --viz_local --camera extra --cam_world_source tf
 #

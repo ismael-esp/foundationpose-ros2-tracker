@@ -11,12 +11,9 @@
 !/foundation_pose.py
 !/fp.py
 !/foundationpose_ros_multi.py
-!/test_foundation_pose.py
+!/multi_object_switcher.py
 !/cam_2_base_transform.py
-!/record.py
-!/yoloworld_preview.py
-!/yolo_det_preview.py
-!/debug_rgbd_stats.py
+!/tools/
 !/scripts/
 !/patches/
 !/docs/

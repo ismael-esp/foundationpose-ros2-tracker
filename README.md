@@ -287,7 +287,7 @@ python3 foundation_pose.py --object "red cube" --hand_frame ra_palm_link --viz_l
    so decimate them.
 3. If the name alone is ambiguous to YOLO-World, add synonyms:
    `--object "mustard" --object_aliases "yellow bottle,sauce bottle"`. Check what YOLO-World sees with
-   `python yoloworld_preview.py --object "mustard"`.
+   `python tools/yoloworld_preview.py --object "mustard"`.
 
 Mesh sources that work well: a phone photogrammetry scan (e.g. Polycam or Kiri Engine, exported as
 OBJ and scaled to metres), the YCB object set, or a CAD model.
@@ -355,14 +355,14 @@ python scripts/record_overlay.py --pose_topic /red_cube_pose --out runs/live/red
 | Script | Purpose |
 |---|---|
 | `foundation_pose.py` | **The training-free single-object tracker** described above |
-| `test_foundation_pose.py` | Multi-object switcher: loads the networks once, then switches the target object at runtime (`]` / `[` / `1`–`9`), without restarting |
+| `multi_object_switcher.py` | Multi-object switcher: loads the networks once, then switches the target object at runtime (`]` / `[` / `1`–`9`), without restarting |
 | `fp.py` | Earlier multi-object node: tracks several objects in parallel with a YOLO detector trained per object (`--detector_weights your.pt`) |
 | `foundationpose_ros_multi.py` | Original multi-object node with a Tkinter object/mask selector |
-| `yoloworld_preview.py` | Shows what YOLO-World detects for a prompt (live topic or `--image file.png`) |
-| `yolo_det_preview.py` | Preview for a fixed-class YOLO model |
+| `tools/yoloworld_preview.py` | Shows what YOLO-World detects for a prompt (live topic or `--image file.png`) |
+| `tools/yolo_det_preview.py` | Preview for a fixed-class YOLO model |
 | `cam_2_base_transform.py` | Camera↔robot-base transform helpers for extrinsic calibration |
-| `record.py` | Records an RGB-D stream (ZMQ) into a ROS 2 bag for later replay |
-| `debug_rgbd_stats.py` | Prints shape, dtype and valid-depth statistics of the incoming streams |
+| `tools/record.py` | Records an RGB-D stream (ZMQ) into a ROS 2 bag for later replay |
+| `tools/debug_rgbd_stats.py` | Prints shape, dtype and valid-depth statistics of the incoming streams |
 | `scripts/` | `install.sh`, `check_install.py`, `check_mesh.py`, `run_tracker.sh`, `replay_demo.sh`, `record_overlay.py` |
 
 ## Troubleshooting
@@ -374,7 +374,7 @@ python scripts/record_overlay.py --pose_topic /red_cube_pose --out runs/live/red
 | `type object 'module' has no attribute '_TYPE_SUPPORT'` | Keep `from estimater import *` **before** the ROS message imports, because `estimater` exports a PIL `Image` that would shadow `sensor_msgs.msg.Image` |
 | Box explodes or appears metres away | The mesh isn't in metres: run `scripts/check_mesh.py` |
 | Box freezes where it first locked while the object moves | Depth is too sparse at the object. Keep `--depth_fill` on, move the camera closer (< 1 m) or use a top-down view |
-| YOLO-World picks the wrong object | Add `--object_aliases`, raise `--det_conf`, use `--detect_mode auto_confirm` and click, or test prompts with `yoloworld_preview.py` |
+| YOLO-World picks the wrong object | Add `--object_aliases`, raise `--det_conf`, use `--detect_mode auto_confirm` and click, or test prompts with `tools/yoloworld_preview.py` |
 | Symmetric object's axes spin | Use `--orientation_mode locked` (default) with `--track_mode hybrid` |
 | `no kernel image is available` on RTX 50xx | PyTorch or an extension was built without sm_120. Use a `cu128` PyTorch and rebuild nvdiffrast/mycuda (`install.sh` steps 4–6) |
 | `Low precision dtypes not supported` | You forced `--precision bf16`. The node reverts to fp32 automatically; use `auto` |
@@ -383,9 +383,10 @@ python scripts/record_overlay.py --pose_topic /red_cube_pose --out runs/live/red
 
 ```
 foundation_pose.py            training-free single-object tracker (main entry point)
-test_foundation_pose.py       runtime multi-object switcher on top of it
+multi_object_switcher.py      runtime multi-object switcher on top of it
 fp.py, foundationpose_ros_multi.py   earlier multi-object trackers
-yoloworld_preview.py, yolo_det_preview.py, debug_rgbd_stats.py, record.py, cam_2_base_transform.py
+cam_2_base_transform.py       camera-to-base transform helpers (imported by foundationpose_ros_multi.py)
+tools/                        detector previews, RGB-D stream check, ZMQ-to-bag recorder
 demo_data/<object>/<object>.obj      object meshes (metres)
 patches/                      FoundationPose patch for PyTorch 2.11 / CUDA 12.8 / sm_120
 scripts/                      install, checks, run/replay/record helpers, env freeze

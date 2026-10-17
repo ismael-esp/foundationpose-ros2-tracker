@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# yoloworld_preview.py
+# tools/yoloworld_preview.py
 # Standalone preview of the EXACT YOLO-World detector used by foundation_pose.py
 # (YoloWorldDetector, foundation_pose.py:485-536). Draws every box so you can
 # see what YOLO-World detects for a given text prompt, and highlights the box
@@ -27,20 +27,20 @@
 #   cd <repo root>
 #
 #   # live on the head camera (default — same topic foundation_pose.py uses):
-#   python3 yoloworld_preview.py --object "red cube"
+#   python3 tools/yoloworld_preview.py --object "red cube"
 #
 #   # front camera instead:
-#   python3 yoloworld_preview.py --object "red cube" \
+#   python3 tools/yoloworld_preview.py --object "red cube" \
 #       --color_topic /front_right/cam1/color/image_raw
 #
 #   # sweep the confidence threshold to see weak detections:
-#   python3 yoloworld_preview.py --object "red cube" --det_conf 0.05
+#   python3 tools/yoloworld_preview.py --object "red cube" --det_conf 0.05
 #
 #   # try several prompts at once (pipeline only uses the single --object):
-#   python3 yoloworld_preview.py --object "red cube,cube,box,red block"
+#   python3 tools/yoloworld_preview.py --object "red cube,cube,box,red block"
 #
 #   # offline on a saved image (no ROS needed):
-#   python3 yoloworld_preview.py --object "red cube" --image debug_frames/x.png
+#   python3 tools/yoloworld_preview.py --object "red cube" --image debug_frames/x.png
 #
 # Window keys: q/ESC quit · s save current annotated frame · +/- conf step
 # ----------------------------------------------------------------------------
