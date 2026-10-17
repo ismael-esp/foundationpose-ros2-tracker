@@ -3,6 +3,8 @@
 # are fetched / built by scripts/install.sh or recorded locally — never stored in git.
 /*
 !/.gitignore
+!/.github/
+!/ruff.toml
 !/README.md
 !/LICENSE
 !/requirements.txt

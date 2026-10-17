@@ -1,5 +1,7 @@
 # FoundationPose ROS 2 Tracker
 
+[![lint](https://github.com/ismael-esp/foundationpose-ros2-tracker/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/ismael-esp/foundationpose-ros2-tracker/actions/workflows/lint.yml)
+
 **Zero-shot 6D object tracking in ROS 2 from just a 3D mesh and an object name.**
 Type `--object "green cube"`, and the node finds the object with an open-vocabulary detector
 (YOLO-World), segments it (SAM 2), registers its full 6D pose with
