@@ -407,6 +407,9 @@ data/, runs/      (created at runtime, not tracked)      replay bags, recordings
   via [Ultralytics](https://github.com/ultralytics/ultralytics) (AGPL-3.0).
 - Some meshes in `demo_data/` (`drill`, `mustard`, `soup_can`) come from the FoundationPose demo data and the
   [YCB object set](https://www.ycbbenchmarks.com/). The others were scanned or modelled for this project.
+- **What the licenses mean in practice:** the [MIT license](LICENSE) covers the files in this repository. A
+  running tracker also loads FoundationPose (NVIDIA Source Code License, non-commercial) and Ultralytics
+  (AGPL-3.0), so a deployed tracker is limited to non-commercial research use.
 
 The code in this repository is released under the [MIT License](LICENSE). Third-party components keep
 their own licenses.

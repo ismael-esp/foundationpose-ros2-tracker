@@ -19,7 +19,6 @@ Ninja
 numpy<2
 omegaconf==2.3.0
 open3d==0.18.0
-openai==1.51.2
 opencv_contrib_python==4.10.0.84
 opencv_python==4.10.0.82
 opencv_python_headless==4.10.0.84

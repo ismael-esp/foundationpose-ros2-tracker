@@ -22,7 +22,6 @@ blinker==1.9.0
 certifi==2025.8.3
 chardet==3.0.4
 charset-normalizer==3.4.3
-claude-monitor==3.1.0
 click==8.4.2
 clip @ git+https://github.com/ultralytics/CLIP.git@81ff68ed7ffcac3b40484c914f104f816757308d
 coacd==1.0.9
@@ -153,7 +152,6 @@ nvidia-nvtx-cu12==12.8.90
 ollama==0.6.1
 omegaconf==2.3.0
 open3d==0.19.0
-openai==1.51.2
 opencv-contrib-python==4.10.0.84
 opencv-python==4.10.0.82
 opencv-python-headless==4.10.0.84
